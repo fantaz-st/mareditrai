@@ -13,7 +13,7 @@ const content = {
     subtitle: "AI driving the digital transformation of the maritime sector",
     text: "Artificial intelligence in the service of safer, smarter and more sustainable maritime systems.",
     cta1: {
-      href: "/en/about-project",
+      href: "/en/about",
       label: "Learn More",
     },
   },
@@ -37,7 +37,7 @@ export default function Hero({ locale = "en" }) {
 
   return (
     <Box className={classes.hero}>
-      <Box className={classes.background} />
+      {/* <Box className={classes.background} /> */}
 
       <Container maxWidth="xl" className={classes.container}>
         <Box className={classes.center}>

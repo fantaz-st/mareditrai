@@ -50,8 +50,8 @@ export default function HomeNews({ data, locale = "hr" }) {
         </Stack>
 
         <Grid container spacing={2}>
-          {posts.slice(0, 6).map((p, index) => (
-            <Grid key={p.id || p.slug} size={{ xs: 12, sm: 6, lg: 4 }} data-aos="fade-up" data-aos-delay={80 + index * 70}>
+          {posts.slice(0, 6).map((p, i) => (
+            <Grid key={p.id || p.slug} size={{ xs: 12, sm: 6, lg: 4 }} data-aos="fade-up" data-aos-delay={i * 100}>
               <div className={classes.item}>
                 <PostCard slug={p.slug} title={p.title} date={p.date} excerpt={p.excerpt} locale={locale} />
               </div>

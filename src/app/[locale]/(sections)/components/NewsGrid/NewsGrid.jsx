@@ -1,14 +1,16 @@
 "use client";
 
+import { Grid } from "@mui/material";
 import PostCard from "@/components/PostCard/PostCard";
-import classes from "./NewsGrid.module.css";
 
 export default function NewsGrid({ posts = [], locale }) {
   return (
-    <div className={classes.grid}>
+    <Grid container spacing={2.5}>
       {posts.map((p) => (
-        <PostCard key={p.id || p.slug} slug={p.slug} title={p.title} date={p.date} locale={locale} />
+        <Grid key={p.id || p.slug} size={{ xs: 12, md: 4 }}>
+          <PostCard slug={p.slug} title={p.title} date={p.date} locale={locale} />
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 }

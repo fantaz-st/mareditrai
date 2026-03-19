@@ -50,13 +50,13 @@ export default function HomeAbout({ locale = "hr" }) {
       href: "/en/about-project",
     },
   };
-
+  // data-aos="fade-up" data-aos-delay={80 + index * 70}
   return (
     <section className={classes.wrap}>
       <Container>
         <Grid container spacing={{ xs: 3, md: 6 }}>
           {/* LEFT */}
-          <Grid size={{ xs: 12, md: 5 }}>
+          <Grid size={{ xs: 12, md: 5 }} data-aos="fade-up">
             <div className={classes.left}>
               <Typography variant="overline" className={classes.eyebrow}>
                 {copy[locale].eyebrow}
@@ -78,7 +78,7 @@ export default function HomeAbout({ locale = "hr" }) {
           <Grid size={{ xs: 12, md: 7 }}>
             <Grid container spacing={2}>
               {copy[locale].blocks.map((block, i) => (
-                <Grid key={block.title} size={{ xs: 12 }}>
+                <Grid key={block.title} size={{ xs: 12 }} data-aos="fade-up" data-aos-delay={i * 100}>
                   <Card variant="glass">
                     <CardContent>
                       <Typography className={classes.cardTitle}>{block.title}</Typography>

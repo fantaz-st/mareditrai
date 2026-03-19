@@ -5,6 +5,7 @@ import { ALL_NEWS } from "@/lib/queries";
 import { wpFetch } from "@/lib/wpFetch";
 import { wpLangFromLocale } from "@/lib/lang";
 import HomeWorkPackages from "@/sections/HomeWorkPackages/HomeWorkPackages";
+import HomePapersSection from "@/sections/HomePapersSection/HomePapersSection";
 
 export default async function Page({ params }) {
   const { locale } = await params;
@@ -19,9 +20,9 @@ export default async function Page({ params }) {
     <div component="main">
       <Hero locale={locale} />
       <HomeAbout locale={locale} />
-
       <HomeWorkPackages locale={locale} />
       {data?.posts?.nodes?.length ? <HomeNews data={data} locale={locale} /> : null}
+      <HomePapersSection locale={locale} />
     </div>
   );
 }

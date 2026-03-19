@@ -102,7 +102,7 @@ export default function HomeWorkPackages({ locale = "hr" }) {
 
         <Grid container spacing={2}>
           {t.items.map((item, i) => (
-            <Grid key={item.key} size={{ xs: 12, sm: 6, lg: 3 }} data-aos="fade-up" data-aos-delay={i * 80}>
+            <Grid key={item.key} size={{ xs: 12, sm: 6, lg: 3 }} data-aos="fade-up" data-aos-delay={i * 100}>
               <Card variant="glass" className={classes.card}>
                 <CardContent className={classes.cardContent}>
                   <Box className={classes.cardTop}>

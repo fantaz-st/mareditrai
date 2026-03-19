@@ -1,19 +1,18 @@
 import { wpFetch } from "@/lib/wpFetch";
 import { PAGE_BY_PATH } from "@/lib/queries";
 import { notFound } from "next/navigation";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, Grid, Card, CardActionArea, CardContent } from "@mui/material";
 import BlockRenderer from "@/components/BlockRenderer/BlockRenderer";
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./page.module.css";
 import { fmtDate } from "@/functions/date";
-
 import HomeIcon from "@mui/icons-material/Home";
 
 export const revalidate = 300;
 
 export default async function WpPage(props) {
-  const { slug } = await props.params;
+  const { slug, locale } = await props.params;
   const segments = Array.isArray(slug) ? slug : [slug].filter(Boolean);
   const path = `/${segments.join("/")}/`;
 
@@ -33,9 +32,8 @@ export default async function WpPage(props) {
       <Container className={classes.container}>
         <header className={classes.header}>
           <nav className={classes.breadcrumbs} aria-label="Breadcrumb">
-            <Link href="/" className={classes.crumb}>
-              {/* Početna stranica */}
-              <HomeIcon />
+            <Link href={`/${locale}`} className={classes.crumb}>
+              <HomeIcon className={classes.homeIcon} />
             </Link>
 
             {ancestors
@@ -62,7 +60,9 @@ export default async function WpPage(props) {
 
           {page.modified ? (
             <div className={classes.meta} data-aos="fade-up" data-aos-delay="90">
-              <span className={classes.metaText}>Ažurirano {fmtDate(page.modified)}</span>
+              <span className={classes.metaText}>
+                {locale === "hr" ? "Ažurirano" : "Updated"} {fmtDate(page.modified)}
+              </span>
             </div>
           ) : null}
         </header>
@@ -89,17 +89,23 @@ export default async function WpPage(props) {
         {children.length ? (
           <section className={classes.subpages} data-aos="fade-up" data-aos-delay="160">
             <Typography variant="h6" className={classes.subpagesTitle}>
-              Subpages
+              {locale === "hr" ? "Podstranice" : "Subpages"}
             </Typography>
 
-            <div className={classes.subpagesGrid}>
+            <Grid container spacing={2}>
               {children.map((c) => (
-                <Link key={c.id} href={c.uri} className={classes.subpageCard}>
-                  <span className={classes.subpageLabel}>{c.title}</span>
-                  <span className={classes.subpageArrow}>→</span>
-                </Link>
+                <Grid key={c.id} size={{ xs: 12, md: 6 }}>
+                  <Link href={c.uri} className={classes.subpageLink}>
+                    <Card variant="glass" className={classes.subpageCard} elevation={0}>
+                      <CardContent className={classes.subpageContent}>
+                        <span className={classes.subpageLabel}>{c.title}</span>
+                        <span className={classes.subpageArrow}>→</span>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </Grid>
               ))}
-            </div>
+            </Grid>
           </section>
         ) : null}
       </Container>

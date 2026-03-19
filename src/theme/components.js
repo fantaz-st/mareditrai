@@ -9,32 +9,44 @@ const components = {
     defaultProps: {
       disableElevation: true,
     },
+
     styleOverrides: {
       root: {
         borderRadius: 999,
-        paddingInline: "1.5rem",
-        paddingBlock: "0.85rem",
+        textTransform: "none",
         fontWeight: 600,
-      },
-
-      containedPrimary: {
-        background: "rgba(255,255,255,0.06)",
-        backdropFilter: "blur(10px)",
-        border: "1px solid rgba(255,255,255,0.12)",
-        color: "#fff",
-        "&:hover": {
-          background: "rgba(255,255,255,0.12)",
-        },
-      },
-
-      outlinedPrimary: {
-        borderColor: "rgba(255,255,255,0.2)",
-        color: "#e6edf3",
-        "&:hover": {
-          borderColor: "#fff",
-        },
+        letterSpacing: "-0.01em",
+        padding: "0.85rem 1.3rem",
+        minWidth: "unset",
+        transition: "background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease",
       },
     },
+
+    variants: [
+      {
+        props: { variant: "cta" },
+        style: {
+          color: "#f4f7fb",
+          background: "rgba(255, 255, 255, 0.02)",
+          border: "1px solid rgba(255, 255, 255, 0.16)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.14)",
+
+          "&:hover": {
+            background: "rgba(255, 255, 255, 0.05)",
+            borderColor: "rgba(255, 255, 255, 0.34)",
+            boxShadow: "0 14px 36px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255,255,255,0.04) inset",
+            transform: "translateY(-1px)",
+          },
+
+          "&:active": {
+            transform: "translateY(0)",
+            boxShadow: "0 8px 22px rgba(0, 0, 0, 0.16)",
+          },
+        },
+      },
+    ],
   },
 
   MuiPaper: {
@@ -51,11 +63,28 @@ const components = {
   MuiCard: {
     styleOverrides: {
       root: {
-        borderRadius: 20,
-        background: "rgba(255,255,255,0.02)",
-        border: "1px solid rgba(255,255,255,0.06)",
+        borderRadius: 24,
+        background: "rgba(255,255,255,0.03)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        transition: "transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease",
       },
     },
+
+    variants: [
+      {
+        props: { variant: "glass" },
+        style: {
+          "&:hover": {
+            transform: "translateY(-6px)",
+            borderColor: "rgba(255,255,255,0.14)",
+            background: "rgba(255,255,255,0.045)",
+            boxShadow: "0 18px 40px rgba(0,0,0,0.22)",
+          },
+        },
+      },
+    ],
   },
 
   MuiAppBar: {

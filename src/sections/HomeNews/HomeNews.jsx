@@ -1,12 +1,29 @@
 "use client";
 
 import classes from "./HomeNews.module.css";
-import { Box, Container, Stack, Typography, Button } from "@mui/material";
+import { Box, Container, Stack, Typography, Button, Grid } from "@mui/material";
 import Link from "next/link";
 import PostCard from "@/components/PostCard/PostCard";
 
+const content = {
+  hr: {
+    eyebrow: "Novosti",
+    title: "Najnovije vijesti i objave",
+    intro: "Pratite novosti projekta, istraživačke aktivnosti, objavljene rezultate i najave važnih događanja.",
+    cta: "Sve novosti",
+    href: "/hr/novosti",
+  },
+  en: {
+    eyebrow: "News",
+    title: "Latest news and updates",
+    intro: "Follow project news, research activities, published results and announcements of important events.",
+    cta: "All news",
+    href: "/en/news",
+  },
+};
+
 export default function HomeNews({ data, locale = "hr" }) {
-  const newsBase = locale === "hr" ? "/hr/novosti" : "/en/news";
+  const t = content[locale] || content.en;
   const posts = data?.posts?.nodes || [];
 
   if (!posts.length) return null;
@@ -17,34 +34,30 @@ export default function HomeNews({ data, locale = "hr" }) {
         <Stack direction={{ xs: "column", md: "row" }} alignItems={{ xs: "flex-start", md: "flex-end" }} justifyContent="space-between" className={classes.top} data-aos="fade-up">
           <Box className={classes.heading}>
             <Typography variant="overline" className={classes.eyebrow}>
-              {locale === "hr" ? "Novosti" : "News"}
+              {t.eyebrow}
             </Typography>
 
             <Typography variant="h2" className={classes.title}>
-              {locale === "hr" ? "Najnovije vijesti i objave" : "Latest news and updates"}
+              {t.title}
             </Typography>
 
-            <Typography className={classes.intro}>
-              {locale === "hr"
-                ? "Pratite novosti projekta, istraživačke aktivnosti, objavljene rezultate i najave važnih događanja."
-                : "Follow project news, research activities, published results and announcements of important events."}
-            </Typography>
+            <Typography className={classes.intro}>{t.intro}</Typography>
           </Box>
 
-          <Link href={newsBase} className={classes.ctaLink}>
-            <Button component="span" variant="outlined" className={classes.ctaBtn}>
-              {locale === "hr" ? "Sve novosti" : "All news"}
-            </Button>
+          <Link href={t.href} className={classes.ctaLink}>
+            <Button variant="cta">{t.cta}</Button>
           </Link>
         </Stack>
 
-        <div className={classes.grid}>
-          {posts.slice(0, 4).map((p, index) => (
-            <div key={p.id || p.slug} className={classes.item} data-aos="fade-up" data-aos-delay={80 + index * 70}>
-              <PostCard slug={p.slug} title={p.title} date={p.date} excerpt={p.excerpt} locale={locale} />
-            </div>
+        <Grid container spacing={2}>
+          {posts.slice(0, 6).map((p, index) => (
+            <Grid key={p.id || p.slug} size={{ xs: 12, sm: 6, lg: 4 }} data-aos="fade-up" data-aos-delay={80 + index * 70}>
+              <div className={classes.item}>
+                <PostCard slug={p.slug} title={p.title} date={p.date} excerpt={p.excerpt} locale={locale} />
+              </div>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       </Container>
     </section>
   );

@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container, Typography, Grid, Card, CardContent, Box } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import classes from "./HomeWorkPackages.module.css";
 
-const copy = {
+const content = {
   hr: {
     eyebrow: "Radni paketi",
     title: "Četiri istraživačka smjera jednog projekta.",
@@ -37,7 +37,6 @@ const copy = {
       },
     ],
   },
-
   en: {
     eyebrow: "Work Packages",
     title: "Four research directions. One project.",
@@ -70,22 +69,17 @@ const copy = {
 };
 
 export default function HomeWorkPackages({ locale = "hr" }) {
-  const t = copy[locale] || copy.hr;
+  const t = content[locale] || content.en;
 
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: "ease-out-cubic",
-      offset: 60,
-    });
+    AOS.init({ duration: 800, once: true, offset: 60 });
   }, []);
 
   return (
     <section className={classes.wrap}>
       <Container className={classes.container}>
-        <div className={classes.top}>
-          <div className={classes.topLeft} data-aos="fade-up">
+        <Grid container spacing={4} alignItems="flex-end" className={classes.top}>
+          <Grid size={{ xs: 12, md: 6 }} data-aos="fade-up">
             <Typography variant="overline" className={classes.eyebrow}>
               {t.eyebrow}
             </Typography>
@@ -93,33 +87,37 @@ export default function HomeWorkPackages({ locale = "hr" }) {
             <Typography variant="h2" className={classes.title}>
               {t.title}
             </Typography>
-          </div>
+          </Grid>
 
-          <div className={classes.topRight} data-aos="fade-up" data-aos-delay="100">
+          <Grid size={{ xs: 12, md: 6 }} data-aos="fade-up" data-aos-delay="100">
             <Typography className={classes.intro}>{t.intro}</Typography>
 
-            <Link href={t.href} className={classes.ctaLink}>
-              <Button component="span" variant="outlined" className={classes.cta}>
+            <Box className={classes.ctaWrap}>
+              <Button component={Link} href={t.href} variant="cta">
                 {t.cta}
               </Button>
-            </Link>
-          </div>
-        </div>
+            </Box>
+          </Grid>
+        </Grid>
 
-        <div className={classes.grid}>
-          {t.items.map((item, index) => (
-            <article key={item.key} className={classes.card} data-aos="fade-up" data-aos-delay={index * 80}>
-              <div className={classes.cardTop}>
-                <span className={classes.key}>{item.key}</span>
-                <span className={classes.line} />
-              </div>
+        <Grid container spacing={2}>
+          {t.items.map((item, i) => (
+            <Grid key={item.key} size={{ xs: 12, sm: 6, lg: 3 }} data-aos="fade-up" data-aos-delay={i * 80}>
+              <Card variant="glass" className={classes.card}>
+                <CardContent className={classes.cardContent}>
+                  <Box className={classes.cardTop}>
+                    <span className={classes.key}>{item.key}</span>
+                    <span className={classes.line} />
+                  </Box>
 
-              <Typography className={classes.cardTitle}>{item.title}</Typography>
+                  <Typography className={classes.cardTitle}>{item.title}</Typography>
 
-              <Typography className={classes.cardText}>{item.text}</Typography>
-            </article>
+                  <Typography className={classes.cardText}>{item.text}</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       </Container>
     </section>
   );

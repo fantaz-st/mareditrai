@@ -20,6 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body>
+        <div className="app-bg" />
         <Providers>
           {children}
           <BackToTop />

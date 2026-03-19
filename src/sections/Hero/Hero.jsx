@@ -16,10 +16,6 @@ const content = {
       href: "/en/about-project",
       label: "Learn More",
     },
-    cta2: {
-      href: "/en/about-project",
-      label: "Learn More",
-    },
   },
   hr: {
     title: "MareDiTrAI",
@@ -29,19 +25,8 @@ const content = {
       href: "/hr/o-projektu",
       label: "Saznaj više",
     },
-    cta2: {
-      href: "/hr/o-projektu",
-      label: "Saznaj više",
-    },
   },
 };
-
-const workPackages = [
-  { key: "WP1", label: "Traffic & Risk" },
-  { key: "WP2", label: "Digital Twins" },
-  { key: "WP3", label: "Marine Environment" },
-  { key: "WP4", label: "Monitoring & Quality" },
-];
 
 export default function Hero({ locale = "en" }) {
   const t = content[locale] || content.en;
@@ -70,24 +55,11 @@ export default function Hero({ locale = "en" }) {
             </Typography>
 
             <Box className={classes.buttons} data-aos="fade-up" data-aos-delay="300">
-              <Button component={Link} href={t.cta1.href} variant="outlined" className={classes.btnPrimary}>
+              <Button component={Link} href={t.cta1.href} variant="cta">
                 {t.cta1.label}
               </Button>
-
-              {/* <Button component={Link} href={t.cta2.href} variant="outlined" className={classes.btnSecondary}>
-                {t.cta2.label}
-              </Button> */}
             </Box>
           </Stack>
-        </Box>
-
-        <Box className={classes.strip}>
-          {workPackages.map((wp) => (
-            <Box key={wp.key} className={classes.stripItem}>
-              <span className={classes.stripKey}>{wp.key}</span>
-              <span className={classes.stripLabel}>{wp.label}</span>
-            </Box>
-          ))}
         </Box>
       </Container>
     </Box>

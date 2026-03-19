@@ -2,20 +2,6 @@
   position: relative;
   width: 100%;
   padding: clamp(5rem, 9vw, 8rem) 0;
-
-  /* 🔥 OBRNUTI GRADIJENT */
-  background: radial-gradient(circle at 80% 30%, rgba(47, 128, 255, 0.12), transparent 28%), linear-gradient(180deg, #0b0f14 0%, #0d131b 100%);
-}
-
-.container {
-  position: relative;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(2rem, 4vw, 5rem);
-  align-items: start;
 }
 
 .left {
@@ -24,7 +10,6 @@
 }
 
 .eyebrow {
-  display: inline-block;
   margin-bottom: 1rem;
   color: rgba(230, 237, 243, 0.56);
 }
@@ -41,7 +26,6 @@
   margin-top: 1.2rem;
   max-width: 46ch;
   color: rgba(230, 237, 243, 0.74);
-  font-size: clamp(1rem, 1.2vw, 1.125rem);
   line-height: 1.75;
 }
 
@@ -51,35 +35,6 @@
   text-decoration: none;
 }
 
-.cta {
-  border-radius: 999px !important;
-  padding: 0.8rem 1.2rem !important;
-  border-color: rgba(255, 255, 255, 0.18) !important;
-  color: #f4f7fb !important;
-}
-
-.cta:hover {
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-}
-
-.right {
-  display: grid;
-  gap: 1rem;
-}
-
-.card {
-  position: relative;
-  padding: 1.4rem 1.35rem;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(8px);
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
-}
 .cardTitle {
   font-size: 0.8rem;
   letter-spacing: 0.12em;
@@ -88,51 +43,12 @@
   color: rgba(255, 255, 255, 0.45);
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.045);
-}
-
 .paragraph {
-  margin: 0;
   color: rgba(230, 237, 243, 0.76);
   line-height: 1.8;
 }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: clamp(2rem, 4vw, 3rem);
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.25rem 0;
-}
-
-.statLabel {
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: #f4f7fb;
-}
-
-.statText {
-  color: rgba(230, 237, 243, 0.62);
-  font-size: 0.95rem;
-}
-
 @media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
   .left {
     position: static;
   }
@@ -143,9 +59,5 @@
 
   .lead {
     max-width: 100%;
-  }
-
-  .stats {
-    grid-template-columns: 1fr;
   }
 }

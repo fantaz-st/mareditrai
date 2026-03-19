@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Typography } from "@mui/material";
+import { Typography, Card, CardActionArea, CardContent, Box } from "@mui/material";
 import dayjs from "dayjs";
 import classes from "./PostCard.module.css";
 
@@ -14,32 +14,34 @@ export default function PostCard({ slug, title, date, excerpt, locale = "hr" }) 
     ?.trim();
 
   return (
-    <Link href={`${base}/${slug}`} className={classes.card}>
-      <div className={classes.bg}>
-        <div className={classes.grid} />
-        <div className={classes.glow} />
-      </div>
+    <Card variant="glass" className={classes.card} elevation={0}>
+      <CardActionArea component={Link} href={`${base}/${slug}`} className={classes.action}>
+        <Box className={classes.bg}>
+          <div className={classes.grid} />
+          <div className={classes.glow} />
+        </Box>
 
-      <div className={classes.content}>
-        <Typography variant="overline" className={classes.date}>
-          {date ? dayjs(date).format(locale === "hr" ? "D. M. YYYY." : "D MMM YYYY") : ""}
-        </Typography>
-
-        <Typography variant="h3" className={classes.title}>
-          {title}
-        </Typography>
-
-        {cleanExcerpt ? (
-          <Typography variant="body1" className={classes.excerpt}>
-            {cleanExcerpt}
+        <CardContent className={classes.content}>
+          <Typography variant="overline" className={classes.date}>
+            {date ? dayjs(date).format(locale === "hr" ? "D. M. YYYY." : "D MMM YYYY") : ""}
           </Typography>
-        ) : null}
 
-        <Typography component="span" className={classes.readMore}>
-          {locale === "hr" ? "Pročitaj vijest" : "Read more"}
-          <span className={classes.arrow}>→</span>
-        </Typography>
-      </div>
-    </Link>
+          <Typography variant="h3" className={classes.title}>
+            {title}
+          </Typography>
+
+          {cleanExcerpt ? (
+            <Typography variant="body1" className={classes.excerpt}>
+              {cleanExcerpt}
+            </Typography>
+          ) : null}
+
+          <Typography component="span" className={classes.readMore}>
+            {locale === "hr" ? "Pročitaj vijest" : "Read more"}
+            <span className={classes.arrow}>→</span>
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 }

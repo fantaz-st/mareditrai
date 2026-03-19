@@ -1,6 +1,5 @@
 "use client";
 
-import site from "@/settings/site";
 import classes from "./Header.module.css";
 import { Typography, IconButton, Drawer } from "@mui/material";
 import Image from "next/image";
@@ -8,14 +7,16 @@ import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import LanguageSwitch from "../LanguageSwitch/LanguageSwitch";
 
-const Header = ({ menuItems = [], locale }) => {
+const Header = ({ menuItems = [], locale, siteName = "MareDiTrAI", logo = null }) => {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState({});
+  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const lastScrollY = useRef(0);
   const menuTree = useMemo(() => menuItems, [menuItems]);
 
   const openDrawer = () => setOpen(true);
@@ -29,50 +30,43 @@ const Header = ({ menuItems = [], locale }) => {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const headerCfg = site.header || {};
-  const isSticky = headerCfg.sticky !== false;
-  const isTransparentEnabled = !!headerCfg.transparent;
-  const solidOnScroll = headerCfg.solidOnScroll !== false;
-  const solidOffset = typeof headerCfg.solidOnScrollOffset === "number" ? headerCfg.solidOnScrollOffset : 12;
-  const textColorInvert = !!headerCfg.textColorInvert;
-
   useEffect(() => {
-    if (!isTransparentEnabled || !solidOnScroll) return;
+    const handleScroll = () => {
+      const currentY = window.scrollY || 0;
 
-    const onScroll = () => {
-      const y = window.scrollY || 0;
-      setScrolled(y > solidOffset);
+      setScrolled(currentY > 0);
+
+      if (currentY <= 0) {
+        setHidden(false);
+      } else if (currentY > lastScrollY.current) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+
+      lastScrollY.current = currentY;
     };
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isTransparentEnabled, solidOnScroll, solidOffset]);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-  const isTransparentNow = isTransparentEnabled && !scrolled;
-  const shouldInvertTransparentText = isTransparentNow && textColorInvert;
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const headerClassName = [
-    classes.container,
-    isSticky ? classes.fixed : classes.notSticky,
-    isTransparentEnabled ? (scrolled ? classes.solid : classes.transparent) : classes.solid,
-    shouldInvertTransparentText ? classes.invertText : "",
-  ].join(" ");
-
-  const style = {
-    ["--header-h"]: `${headerCfg.height || 72}px`,
-  };
+  const headerClassName = [classes.header, hidden ? classes.hidden : classes.visible, scrolled ? classes.scrolled : ""].join(" ");
 
   return (
-    <header className={headerClassName} style={style}>
+    <header className={headerClassName}>
+      <div className={classes.shadow} />
+
       <div className={classes.inner}>
         <div className={classes.logo}>
-          <Link href="/" className={classes.logoLink} onClick={closeDrawer}>
-            {site.logo ? (
-              <Image src={site.logo} fill alt={site.name} className={classes.logoImage} />
+          <Link href={locale === "hr" ? "/hr" : "/en"} className={classes.logoLink} onClick={closeDrawer}>
+            {logo ? (
+              <Image src={logo} fill alt={siteName} className={classes.logoImage} />
             ) : (
-              <Typography variant="h3" component="span" className={classes.logoText}>
-                {site.name}
+              <Typography variant="h4" className={classes.logoText}>
+                {siteName}
               </Typography>
             )}
           </Link>
@@ -104,20 +98,22 @@ const Header = ({ menuItems = [], locale }) => {
           })}
         </nav>
 
-        <LanguageSwitch locale={locale} />
+        <div className={classes.right}>
+          <LanguageSwitch locale={locale} />
 
-        <div className={classes.menuMobile}>
-          <IconButton aria-label="Open menu" onClick={openDrawer} className={classes.iconBtn}>
-            <MenuIcon />
-          </IconButton>
+          <div className={classes.menuMobile}>
+            <IconButton onClick={openDrawer} className={classes.iconBtn}>
+              <MenuIcon />
+            </IconButton>
+          </div>
         </div>
       </div>
 
       <Drawer anchor="right" open={open} onClose={closeDrawer}>
         <div className={classes.drawer}>
           <div className={classes.drawerTop}>
-            <Typography variant="h6">{site.name}</Typography>
-            <IconButton aria-label="Close menu" onClick={closeDrawer}>
+            <Typography variant="h6">{siteName}</Typography>
+            <IconButton onClick={closeDrawer}>
               <CloseIcon />
             </IconButton>
           </div>
@@ -136,12 +132,7 @@ const Header = ({ menuItems = [], locale }) => {
                     </Link>
 
                     {hasChildren && (
-                      <button
-                        type="button"
-                        className={`${classes.expandBtn} ${isOpen ? classes.expandBtnOpen : ""}`}
-                        onClick={() => toggleExpand(item.databaseId)}
-                        aria-label="Toggle submenu"
-                      >
+                      <button className={`${classes.expandBtn} ${isOpen ? classes.expandBtnOpen : ""}`} onClick={() => toggleExpand(item.databaseId)}>
                         <KeyboardArrowDownIcon />
                       </button>
                     )}

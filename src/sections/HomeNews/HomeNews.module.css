@@ -1,0 +1,53 @@
+.wrap {
+  width: 100%;
+}
+.top {
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.heading {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  color: #0e2f57;
+  letter-spacing: -0.03em;
+}
+
+.ctaLink {
+  text-decoration: none;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.ctaBtn {
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  white-space: nowrap;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.item {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .top {
+    margin-bottom: 1.5rem;
+  }
+
+  .ctaBtn {
+    padding: 0.65rem 0.95rem;
+  }
+
+  .list {
+    gap: 1rem;
+  }
+}

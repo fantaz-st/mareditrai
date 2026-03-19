@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Typography } from "@mui/material";
-import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import dayjs from "dayjs";
 import classes from "./PostCard.module.css";
 
@@ -18,40 +17,28 @@ export default function PostCard({ slug, title, date, excerpt, locale = "hr" }) 
     <Link href={`${base}/${slug}`} className={classes.card}>
       <div className={classes.bg}>
         <div className={classes.grid} />
-        <div className={classes.dots} />
-        <div className={classes.waveOne} />
-        <div className={classes.waveTwo} />
-        <div className={classes.waveThree} />
         <div className={classes.glow} />
       </div>
 
       <div className={classes.content}>
-        <div className={classes.topRow}>
-          <div className={classes.iconWrap}>
-            <NotificationsNoneRoundedIcon className={classes.icon} />
-          </div>
+        <Typography variant="overline" className={classes.date}>
+          {date ? dayjs(date).format(locale === "hr" ? "D. M. YYYY." : "D MMM YYYY") : ""}
+        </Typography>
 
-          <div className={classes.textWrap}>
-            <Typography variant="overline" color="text.secondary" className={classes.date}>
-              {date ? dayjs(date).format(locale === "hr" ? "D. M. YYYY." : "D MMM YYYY") : ""}
-            </Typography>
+        <Typography variant="h3" className={classes.title}>
+          {title}
+        </Typography>
 
-            <Typography variant="h3" className={classes.title}>
-              {title}
-            </Typography>
+        {cleanExcerpt ? (
+          <Typography variant="body1" className={classes.excerpt}>
+            {cleanExcerpt}
+          </Typography>
+        ) : null}
 
-            {cleanExcerpt ? (
-              <Typography variant="body1" color="text.secondary" className={classes.excerpt}>
-                {cleanExcerpt}
-              </Typography>
-            ) : null}
-
-            <Typography component="span" className={classes.readMore}>
-              {locale === "hr" ? "Pročitaj vijest" : "Read more"}
-              <span className={classes.arrow}>→</span>
-            </Typography>
-          </div>
-        </div>
+        <Typography component="span" className={classes.readMore}>
+          {locale === "hr" ? "Pročitaj vijest" : "Read more"}
+          <span className={classes.arrow}>→</span>
+        </Typography>
       </div>
     </Link>
   );

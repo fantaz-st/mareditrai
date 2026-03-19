@@ -1,19 +1,43 @@
 .wrap {
+  position: relative;
   width: 100%;
+  padding: clamp(5rem, 9vw, 8rem) 0;
+  background: radial-gradient(circle at 78% 24%, rgba(47, 128, 255, 0.08), transparent 24%), linear-gradient(180deg, #0b0f14 0%, #0d131b 100%);
 }
+
+.container {
+  position: relative;
+}
+
 .top {
-  gap: 1.25rem;
-  margin-bottom: 2rem;
+  gap: 1.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
 }
 
 .heading {
   min-width: 0;
+  max-width: 760px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: rgba(230, 237, 243, 0.56);
 }
 
 .title {
   margin: 0;
-  color: #0e2f57;
-  letter-spacing: -0.03em;
+  color: #f4f7fb;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  max-width: 12ch;
+}
+
+.intro {
+  margin-top: 1rem;
+  color: rgba(230, 237, 243, 0.72);
+  line-height: 1.75;
+  max-width: 60ch;
 }
 
 .ctaLink {
@@ -23,31 +47,50 @@
 }
 
 .ctaBtn {
-  border-radius: 999px;
-  padding: 0.7rem 1rem;
+  border-radius: 999px !important;
+  padding: 0.8rem 1.15rem !important;
   white-space: nowrap;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #f4f7fb !important;
 }
 
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.ctaBtn:hover {
+  border-color: rgba(255, 255, 255, 0.38) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
 }
 
 .item {
-  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 900px) {
   .top {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .title {
+    max-width: 100%;
   }
 
   .ctaBtn {
-    padding: 0.65rem 0.95rem;
+    padding: 0.72rem 1rem !important;
   }
+}
 
-  .list {
-    gap: 1rem;
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
 }

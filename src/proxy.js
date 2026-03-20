@@ -3,7 +3,7 @@ import { i18n } from "./settings/i18n";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-export function middleware(req) {
+export function proxy(req) {
   const { pathname, search } = req.nextUrl;
 
   if (

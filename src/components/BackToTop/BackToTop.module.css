@@ -3,28 +3,44 @@
   bottom: 32px;
   width: 44px;
   height: 44px;
-  border-radius: 50%;
-  border: none;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   cursor: pointer;
   display: grid;
   place-items: center;
-  background: #0b1f2a;
-  color: white;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  background: rgba(10, 15, 21, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #f4f7fb;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(10px) scale(0.96);
   pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
   z-index: 1200;
 }
 
 .button:hover {
-  background: #003357;
+  background: rgba(10, 15, 21, 0.9);
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px) scale(1);
+}
+
+.button svg {
+  transition: transform 0.2s ease;
+}
+
+.button:hover svg {
+  transform: translateY(-2px);
 }
 
 .visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 

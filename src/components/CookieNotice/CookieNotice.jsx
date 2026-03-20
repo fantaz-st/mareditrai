@@ -11,13 +11,13 @@ const copy = {
   hr: {
     text: "Ova web stranica koristi funkcionalni kolačić za pamćenje odabranog jezika.",
     link: "Saznaj više",
-    href: "/hr/privacy",
+    href: "/hr/politika-privatnosti",
     button: "U redu",
   },
   en: {
     text: "This website uses a functional cookie to remember your selected language.",
     link: "Learn more",
-    href: "/en/privacy",
+    href: "/en/privacy-policy",
     button: "OK",
   },
 };
@@ -57,7 +57,7 @@ export default function CookieNotice({ locale = "hr" }) {
     <div className={classes.wrap}>
       <div className={classes.box}>
         <div className={classes.text}>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" className={classes.textInner}>
             {t.text}{" "}
             <Link href={t.href} className={classes.link}>
               {t.link}
@@ -65,7 +65,7 @@ export default function CookieNotice({ locale = "hr" }) {
           </Typography>
         </div>
 
-        <Button variant="contained" onClick={handleClose} className={classes.button}>
+        <Button variant="cta" onClick={handleClose} className={classes.button}>
           {t.button}
         </Button>
       </div>

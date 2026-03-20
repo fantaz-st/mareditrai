@@ -6,6 +6,7 @@ const typography = {
     fontSize: "clamp(3rem, 7vw, 6rem)",
     lineHeight: 0.95,
     letterSpacing: "-0.04em",
+    marginBottom: "0.5em",
   },
 
   h2: {
@@ -13,6 +14,7 @@ const typography = {
     fontSize: "clamp(2.2rem, 4vw, 3.5rem)",
     lineHeight: 1,
     letterSpacing: "-0.03em",
+    marginBottom: "0.5em",
   },
 
   h3: {
@@ -20,12 +22,14 @@ const typography = {
     fontSize: "clamp(1.4rem, 2vw, 2rem)",
     lineHeight: 1.1,
     letterSpacing: "-0.02em",
+    marginBottom: "0.5em",
   },
 
   h4: {
     fontWeight: 600,
     fontSize: "1.1rem",
     lineHeight: 1.3,
+    marginBottom: "0.5em",
   },
 
   body1: {

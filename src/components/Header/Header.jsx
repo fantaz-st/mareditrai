@@ -57,8 +57,6 @@ const Header = ({ menuItems = [], locale, siteName = "MareDiTrAI", logo = null }
 
   return (
     <header className={headerClassName}>
-      <div className={classes.shadow} />
-
       <div className={classes.inner}>
         <div className={classes.logo}>
           <Link href={locale === "hr" ? "/hr" : "/en"} className={classes.logoLink} onClick={closeDrawer}>

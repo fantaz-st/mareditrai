@@ -6,6 +6,8 @@ import site from "@/settings/site";
 import BackToTop from "@/components/BackToTop/BackToTop";
 import NextTopLoader from "nextjs-toploader";
 
+import { Analytics } from "@vercel/analytics/next";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-primary",
@@ -27,6 +29,7 @@ export default function RootLayout({ children }) {
           {children}
           <BackToTop />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

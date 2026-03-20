@@ -70,7 +70,7 @@ export default function Footer({ menuItems = [], locale }) {
         {/* BOTTOM */}
         <div className={classes.bottom}>
           <Typography variant="body2" className={classes.copy}>
-            © {new Date().getFullYear()} {locale === "hr" ? site.footer?.copyright?.owner?.hr : site.footer?.copyright?.owner?.en}.{" "}
+            © {new Date().getFullYear()} {locale === "hr" ? site.footer?.copyright?.owner?.hr : site.footer?.copyright?.owner?.en}.
             {locale === "hr" ? "Sva prava pridržana." : "All rights reserved."}
           </Typography>
 

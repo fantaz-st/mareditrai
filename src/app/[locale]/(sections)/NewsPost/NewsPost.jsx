@@ -40,7 +40,7 @@ export default async function NewsPost({ params, backHref, backLabel }) {
 
       {p.date ? (
         <div className={classes.date} data-aos="fade-up" data-aos-delay="120">
-          {fmtDate(p.date)}
+          {fmtDate(p.date, locale)}
         </div>
       ) : null}
 

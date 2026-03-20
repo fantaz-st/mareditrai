@@ -61,7 +61,7 @@ export default async function WpPage(props) {
           {page.modified ? (
             <div className={classes.meta} data-aos="fade-up" data-aos-delay="90">
               <span className={classes.metaText}>
-                {locale === "hr" ? "Ažurirano" : "Updated"} {fmtDate(page.modified)}
+                {locale === "hr" ? "Ažurirano" : "Updated"} {fmtDate(page.modified, locale)}
               </span>
             </div>
           ) : null}

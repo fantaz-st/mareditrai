@@ -7,6 +7,13 @@ import { wpLangFromLocale } from "@/lib/lang";
 import HomeWorkPackages from "@/sections/HomeWorkPackages/HomeWorkPackages";
 import HomePapersSection from "@/sections/HomePapersSection/HomePapersSection";
 
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return {
+    alternates: { canonical: `/${locale}`, languages: { hr: "/hr", en: "/en" } },
+  };
+}
+
 export default async function Page({ params }) {
   const { locale } = await params;
 
@@ -17,7 +24,7 @@ export default async function Page({ params }) {
   });
 
   return (
-    <div component="main">
+    <div>
       <Hero locale={locale} />
       <HomeAbout locale={locale} />
       <HomeWorkPackages locale={locale} />

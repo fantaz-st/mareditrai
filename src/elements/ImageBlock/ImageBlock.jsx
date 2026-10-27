@@ -49,7 +49,7 @@ export default function ImageBlock({ attributes = {} }) {
           maxWidth: typeof displayWidth === "number" ? `${displayWidth}px` : displayWidth || "100%",
         }}
       >
-        <Image src={url} fill style={{ objectFit }} alt={commonAlt} {...(blurDataURL ? { placeholder: "blur", blurDataURL } : {})} />
+        <Image src={url} fill sizes="(min-width: 1200px) 1100px, 100vw" style={{ objectFit }} alt={commonAlt} {...(blurDataURL ? { placeholder: "blur", blurDataURL } : {})} />
       </Box>
     );
 
@@ -77,7 +77,7 @@ export default function ImageBlock({ attributes = {} }) {
     );
   }
 
-  const imgEl = <Image src={url} width={wNum} height={hNum} alt={commonAlt} quality={100} style={{ width: "100%", height: "auto", display: "block", objectFit }} sizes="(max-width: 360px) 100vw, (max-width: 1024px) 66vw, 50vw" {...(blurDataURL ? { placeholder: "blur", blurDataURL } : {})} />;
+  const imgEl = <Image src={url} width={wNum} height={hNum} alt={commonAlt} style={{ width: "100%", height: "auto", display: "block", objectFit }} sizes="(max-width: 360px) 100vw, (max-width: 1024px) 66vw, 50vw" {...(blurDataURL ? { placeholder: "blur", blurDataURL } : {})} />;
 
   const content = linkProps ? (
     isInternal(linkProps.href) ? (

@@ -1,5 +1,5 @@
 const typography = {
-  fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+  fontFamily: "var(--font-primary), system-ui, -apple-system, sans-serif",
 
   h1: {
     fontWeight: 800,

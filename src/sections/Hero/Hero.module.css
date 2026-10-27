@@ -8,16 +8,6 @@
   justify-content: center;
 }
 
-.background {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 70% 40%, rgba(20, 60, 120, 0.35), transparent 60%), linear-gradient(180deg, rgba(5, 10, 20, 0.7), rgba(5, 10, 20, 0.95)),
-    url("/images/mareditrai-hero.png");
-  background-size: cover;
-  background-position: center;
-}
-
 .container {
   position: relative;
   z-index: 2;

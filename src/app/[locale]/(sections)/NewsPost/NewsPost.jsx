@@ -1,40 +1,59 @@
-import { wpFetch } from "@/lib/wpFetch";
-import { POST_BY_SLUG } from "@/lib/queries";
 import { notFound } from "next/navigation";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import BlockRenderer from "@/components/BlockRenderer/BlockRenderer";
+import NextLinkButton from "@/components/NextButtonLink/NextButtonLink";
+import { PageTranslations } from "@/components/LanguageSwitch/TranslationsContext";
 import Image from "next/image";
-import Link from "next/link";
 import classes from "./NewsPost.module.css";
-import { wpLangFromLocale } from "@/lib/lang";
 import { fmtDate } from "@/functions/date";
+import { postHrefs } from "@/functions/localizeUri";
+import { getPostBySlug, parseBlocks, stripHtml } from "@/lib/wpData";
+import { baseOpenGraph } from "@/lib/metadata";
 
-export const revalidate = 300;
+export async function generateNewsPostMetadata({ params }) {
+  const { slug, locale } = await params;
+  const p = await getPostBySlug(slug, locale);
+  if (!p) return {};
+
+  const hrefs = postHrefs(p, locale);
+  const description = stripHtml(p.excerpt).slice(0, 300) || undefined;
+  const image = p.featuredImage?.node?.sourceUrl;
+
+  return {
+    title: p.title,
+    description,
+    alternates: { canonical: hrefs[locale], languages: hrefs },
+    openGraph: {
+      ...baseOpenGraph(locale),
+      type: "article",
+      title: p.title,
+      description,
+      url: hrefs[locale],
+      publishedTime: p.date,
+      modifiedTime: p.modified,
+      ...(image ? { images: [image] } : {}),
+    },
+  };
+}
 
 export default async function NewsPost({ params, backHref, backLabel }) {
   const { slug, locale } = await params;
 
-  const data = await wpFetch(POST_BY_SLUG, {
-    slug,
-    lang: wpLangFromLocale(locale),
-  });
-
-  const p = data?.posts?.nodes?.[0];
+  const p = await getPostBySlug(slug, locale);
   if (!p) return notFound();
 
-  const blocks = Array.isArray(p.blocks) ? p.blocks : typeof p.blocks === "string" ? JSON.parse(p.blocks) : [];
+  const blocks = parseBlocks(p.blocks);
 
   return (
     <Container className={classes.container}>
+      <PageTranslations hrefs={postHrefs(p, locale)} />
       <div className={classes.top}>
-        <Link href={backHref} className={classes.backLink}>
-          <Button variant="cta" className={classes.backBtn}>
-            ← {backLabel}
-          </Button>
-        </Link>
+        <NextLinkButton href={backHref} variant="cta" className={classes.backBtn}>
+          ← {backLabel}
+        </NextLinkButton>
       </div>
 
-      <Typography variant="h2" className={classes.title} data-aos="fade-up">
+      <Typography variant="h2" component="h1" className={classes.title} data-aos="fade-up">
         {p.title}
       </Typography>
 

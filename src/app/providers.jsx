@@ -12,6 +12,15 @@ export default function Providers({ children }) {
     AOS.init({ once: true, duration: 700, easing: "ease-out-cubic" });
   }, []);
 
+  useEffect(() => {
+    let fancybox;
+    import("@fancyapps/ui").then(({ Fancybox }) => {
+      fancybox = Fancybox;
+      Fancybox.bind("[data-fancybox]");
+    });
+    return () => fancybox?.unbind("[data-fancybox]");
+  }, []);
+
   return (
     <AppRouterCacheProvider options={{ enableCssLayer: true }}>
       <ThemeProvider theme={theme}>

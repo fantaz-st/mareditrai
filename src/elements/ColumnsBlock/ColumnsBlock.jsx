@@ -18,13 +18,12 @@ const calculateGridItem = (sirina) => {
   }
 };
 
-const ColumnsBlock = ({ innerBlocks }) => {
-  // console.log(innerBlocks[0].attributes.width);
+const ColumnsBlock = ({ innerBlocks = [] }) => {
   return (
     <Grid container spacing={3}>
       {innerBlocks.map((block, i) => (
-        <Grid size={{ xs: 12, md: calculateGridItem(block.attributes.width) }} key={i} sx={{ margin: "1rem 0" }}>
-          {block.innerBlocks.map((innerBlock, j) => (
+        <Grid size={{ xs: 12, md: calculateGridItem(block?.attributes?.width) }} key={i} sx={{ margin: "1rem 0" }}>
+          {(block?.innerBlocks || []).map((innerBlock, j) => (
             <BlockRenderer block={innerBlock} key={j} />
           ))}
         </Grid>

@@ -3,6 +3,16 @@ const site = {
   description: "Umjetna inteligencija u službi digitalne transformacije pomorskog sektora",
   locale: "en",
 
+  // absolute base for canonical/hreflang/Open Graph URLs; set NEXT_PUBLIC_SITE_URL in production
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000"),
+
+  descriptions: {
+    hr: "Umjetna inteligencija u službi digitalne transformacije pomorskog sektora",
+    en: "AI driving the digital transformation of the maritime sector",
+  },
+
   menu: {
     hr: "main-menu-hr",
     en: "main-menu-en",
@@ -40,6 +50,10 @@ const site = {
       },
       year: "auto",
     },
+  },
+
+  news: {
+    pageSize: 12,
   },
 
   backToTop: {

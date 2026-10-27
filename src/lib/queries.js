@@ -1,31 +1,3 @@
-export const LATEST_POSTS = `
-  query Latest($first: Int = 6, $lang: LanguageCodeFilterEnum!) {
-    posts(
-      first: $first
-      where: {
-        status: PUBLISH
-        orderby: { field: DATE, order: DESC }
-        language: $lang
-      }
-    ) {
-      nodes {
-        id
-        slug
-        uri
-        title
-        date
-        excerpt
-        language { slug }
-        translations {
-          slug
-          uri
-          language { slug }
-        }
-      }
-    }
-  }
-`;
-
 export const ALL_NEWS = `
   query AllNews(
     $first: Int = 12,
@@ -81,6 +53,7 @@ export const POST_BY_SLUG = `
         title
         date
         modified
+        excerpt
         featuredImage { node { sourceUrl altText } }
         blocks(attributes: true, dynamicContent: true)
         language { slug }
@@ -89,51 +62,6 @@ export const POST_BY_SLUG = `
           uri
           language { slug }
         }
-      }
-    }
-  }
-`;
-
-export const ALL_PAGES = `
-  query AllPages($first: Int = 200, $lang: LanguageCodeFilterEnum!) {
-    pages(
-      first: $first
-      where: {
-        status: PUBLISH
-        language: $lang
-      }
-    ) {
-      nodes {
-        id
-        slug
-        uri
-        title
-        databaseId
-        parentDatabaseId
-        language { slug }
-        translations {
-          uri
-          slug
-          language { slug }
-        }
-      }
-    }
-  }
-`;
-
-export const ALL_PAGES_ALT = `
-  query AllPagesAlt {
-    pages(
-      where: {
-        status: PUBLISH
-      }
-    ) {
-      nodes {
-        databaseId
-        parentDatabaseId
-        slug
-        title
-        uri
       }
     }
   }

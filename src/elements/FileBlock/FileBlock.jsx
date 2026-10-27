@@ -1,6 +1,5 @@
-"use client";
 import parseHtml from "@/functions/parser";
-import { Stack, Button, Typography, Link as MLink, Box, Tooltip } from "@mui/material";
+import { Typography, Box, Tooltip } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import classes from "./FileBlock.module.css";
@@ -84,13 +83,13 @@ export default function FileBlock({ attributes }) {
         <Typography variant="body3">{label}</Typography>
         <Box className={classes.icons}>
           {attributes.extension === "pdf" && (
-            <a href={url} style={{ textDecoration: "none" }} target="_blank" rel="noopener noreferrer" alt={attributes.fileLabel}>
+            <a href={url} style={{ textDecoration: "none" }} target="_blank" rel="noopener noreferrer" aria-label={attributes.fileLabel}>
               <Tooltip title="Otvori u pregledniku" arrow>
                 <VisibilityIcon className={classes.eye} sx={{ backgroundColor: highLightLinks ? "#ff0000" : "none" }} />
               </Tooltip>
             </a>
           )}
-          <a download href={url} style={{ textDecoration: "none" }} target="_blank" rel="noopener noreferrer" alt={attributes.fileLabel}>
+          <a download href={url} style={{ textDecoration: "none" }} target="_blank" rel="noopener noreferrer" aria-label={attributes.fileLabel}>
             <Tooltip title="Preuzmi datoteku" arrow>
               <DownloadIcon className={classes.arrow} sx={{ backgroundColor: highLightLinks ? "#ff0000" : "none" }} />
             </Tooltip>

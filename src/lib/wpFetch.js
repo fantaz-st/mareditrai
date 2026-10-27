@@ -4,9 +4,10 @@ export async function wpFetch(query, variables = {}) {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ query, variables }),
     next: { revalidate: 300 },
+    signal: AbortSignal.timeout(15000),
   });
+  if (!r.ok) throw new Error(`WPGraphQL HTTP ${r.status}`);
   const j = await r.json();
   if (j.errors) throw new Error(j.errors[0]?.message || "WPGraphQL error");
-  // console.log(j.data);
   return j.data;
 }

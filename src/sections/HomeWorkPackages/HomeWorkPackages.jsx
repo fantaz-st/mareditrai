@@ -1,10 +1,5 @@
-"use client";
-
-import { useEffect } from "react";
-import Link from "next/link";
-import { Button, Container, Typography, Grid, Card, CardContent, Box } from "@mui/material";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { Container, Typography, Grid, Card, CardContent, Box } from "@mui/material";
+import NextLinkButton from "@/components/NextButtonLink/NextButtonLink";
 import classes from "./HomeWorkPackages.module.css";
 
 const content = {
@@ -71,10 +66,6 @@ const content = {
 export default function HomeWorkPackages({ locale = "hr" }) {
   const t = content[locale] || content.en;
 
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true, offset: 60 });
-  }, []);
-
   return (
     <section className={classes.wrap}>
       <Container className={classes.container}>
@@ -93,9 +84,9 @@ export default function HomeWorkPackages({ locale = "hr" }) {
             <Typography className={classes.intro}>{t.intro}</Typography>
 
             <Box className={classes.ctaWrap}>
-              <Button component={Link} href={t.href} variant="cta">
+              <NextLinkButton href={t.href} variant="cta">
                 {t.cta}
-              </Button>
+              </NextLinkButton>
             </Box>
           </Grid>
         </Grid>

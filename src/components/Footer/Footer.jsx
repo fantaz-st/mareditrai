@@ -1,5 +1,3 @@
-"use client";
-
 import site from "@/settings/site";
 import classes from "./Footer.module.css";
 import Link from "next/link";

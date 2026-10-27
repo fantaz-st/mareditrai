@@ -1,5 +1,3 @@
-"use client";
-
 import { Container, Grid, Typography, Button, Card, CardContent, Box } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";

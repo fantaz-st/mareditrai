@@ -1,27 +1,44 @@
-import { wpFetch } from "@/lib/wpFetch";
-import { PAGE_BY_PATH } from "@/lib/queries";
 import { notFound } from "next/navigation";
-import { Box, Container, Typography, Grid, Card, CardActionArea, CardContent } from "@mui/material";
+import { Box, Container, Typography, Grid, Card, CardContent } from "@mui/material";
 import BlockRenderer from "@/components/BlockRenderer/BlockRenderer";
+import { PageTranslations } from "@/components/LanguageSwitch/TranslationsContext";
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./page.module.css";
 import { fmtDate } from "@/functions/date";
+import { localizeUri, pageHrefs } from "@/functions/localizeUri";
+import { getPageByPath, parseBlocks } from "@/lib/wpData";
+import { baseOpenGraph } from "@/lib/metadata";
 import HomeIcon from "@mui/icons-material/Home";
 
-export const revalidate = 300;
+export function generateStaticParams() {
+  return [];
+}
+
+const pathFromSlug = (slug) => `/${(Array.isArray(slug) ? slug : [slug].filter(Boolean)).join("/")}/`;
+
+export async function generateMetadata({ params }) {
+  const { slug, locale } = await params;
+  const page = await getPageByPath(pathFromSlug(slug));
+  if (!page) return {};
+
+  const hrefs = pageHrefs(page, locale);
+  const image = page.featuredImage?.node?.sourceUrl;
+
+  return {
+    title: page.title,
+    alternates: { canonical: hrefs[locale], languages: hrefs },
+    openGraph: { ...baseOpenGraph(locale), title: page.title, url: hrefs[locale], ...(image ? { images: [image] } : {}) },
+  };
+}
 
 export default async function WpPage(props) {
   const { slug, locale } = await props.params;
-  const segments = Array.isArray(slug) ? slug : [slug].filter(Boolean);
-  const path = `/${segments.join("/")}/`;
 
-  const pageData = await wpFetch(PAGE_BY_PATH, { path });
-
-  const page = pageData?.page;
+  const page = await getPageByPath(pathFromSlug(slug));
   if (!page) return notFound();
 
-  const blocks = Array.isArray(page.blocks) ? page.blocks : typeof page.blocks === "string" ? JSON.parse(page.blocks) : [];
+  const blocks = parseBlocks(page.blocks);
 
   const ancestors = page.ancestors?.nodes || [];
   const children = page.children?.nodes || [];
@@ -29,10 +46,11 @@ export default async function WpPage(props) {
 
   return (
     <Box component="article" className={classes.article}>
+      <PageTranslations hrefs={pageHrefs(page, locale)} />
       <Container className={classes.container}>
         <header className={classes.header}>
           <nav className={classes.breadcrumbs} aria-label="Breadcrumb">
-            <Link href={`/${locale}`} className={classes.crumb}>
+            <Link href={`/${locale}`} className={classes.crumb} aria-label={locale === "hr" ? "Početna" : "Home"}>
               <HomeIcon className={classes.homeIcon} />
             </Link>
 
@@ -42,7 +60,7 @@ export default async function WpPage(props) {
               .map((a) => (
                 <span key={a.id} className={classes.crumbRow}>
                   <span className={classes.sep}>/</span>
-                  <Link href={a.uri} className={classes.crumb}>
+                  <Link href={localizeUri(a.uri, locale)} className={classes.crumb}>
                     {a.title}
                   </Link>
                 </span>
@@ -54,7 +72,7 @@ export default async function WpPage(props) {
             </span>
           </nav>
 
-          <Typography variant="h2" className={classes.title} data-aos="fade-up">
+          <Typography variant="h2" component="h1" className={classes.title} data-aos="fade-up">
             {page.title}
           </Typography>
 
@@ -88,14 +106,14 @@ export default async function WpPage(props) {
 
         {children.length ? (
           <section className={classes.subpages} data-aos="fade-up" data-aos-delay="160">
-            <Typography variant="h6" className={classes.subpagesTitle}>
+            <Typography variant="h6" component="h2" className={classes.subpagesTitle}>
               {locale === "hr" ? "Podstranice" : "Subpages"}
             </Typography>
 
             <Grid container spacing={2}>
               {children.map((c) => (
                 <Grid key={c.id} size={{ xs: 12, md: 6 }}>
-                  <Link href={c.uri} className={classes.subpageLink}>
+                  <Link href={localizeUri(c.uri, locale)} className={classes.subpageLink}>
                     <Card variant="glass" className={classes.subpageCard} elevation={0}>
                       <CardContent className={classes.subpageContent}>
                         <span className={classes.subpageLabel}>{c.title}</span>

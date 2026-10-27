@@ -1,8 +1,6 @@
-"use client";
-
 import classes from "./HomeNews.module.css";
-import { Box, Container, Stack, Typography, Button, Grid } from "@mui/material";
-import Link from "next/link";
+import { Box, Container, Stack, Typography, Grid } from "@mui/material";
+import NextLinkButton from "@/components/NextButtonLink/NextButtonLink";
 import PostCard from "@/components/PostCard/PostCard";
 
 const content = {
@@ -44,9 +42,9 @@ export default function HomeNews({ data, locale = "hr" }) {
             <Typography className={classes.intro}>{t.intro}</Typography>
           </Box>
 
-          <Link href={t.href} className={classes.ctaLink}>
-            <Button variant="cta">{t.cta}</Button>
-          </Link>
+          <NextLinkButton href={t.href} variant="cta" className={classes.ctaLink}>
+            {t.cta}
+          </NextLinkButton>
         </Stack>
 
         <Grid container spacing={2}>

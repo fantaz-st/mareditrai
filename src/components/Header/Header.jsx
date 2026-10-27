@@ -7,7 +7,7 @@ import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import LanguageSwitch from "../LanguageSwitch/LanguageSwitch";
 
 const Header = ({ menuItems = [], locale, siteName = "MareDiTrAI", logo = null }) => {
@@ -17,7 +17,6 @@ const Header = ({ menuItems = [], locale, siteName = "MareDiTrAI", logo = null }
   const [scrolled, setScrolled] = useState(false);
 
   const lastScrollY = useRef(0);
-  const menuTree = useMemo(() => menuItems, [menuItems]);
 
   const openDrawer = () => setOpen(true);
 
@@ -71,7 +70,7 @@ const Header = ({ menuItems = [], locale, siteName = "MareDiTrAI", logo = null }
         </div>
 
         <nav className={classes.menuDesktop}>
-          {menuTree.map((item) => {
+          {menuItems.map((item) => {
             const children = item.childNodes || item.children || [];
             const hasChildren = children.length > 0;
 
@@ -97,7 +96,9 @@ const Header = ({ menuItems = [], locale, siteName = "MareDiTrAI", logo = null }
         </nav>
 
         <div className={classes.right}>
-          <LanguageSwitch locale={locale} />
+          <Suspense fallback={<div style={{ width: 86, height: 34 }} />}>
+            <LanguageSwitch locale={locale} />
+          </Suspense>
 
           <div className={classes.menuMobile}>
             <IconButton onClick={openDrawer} className={classes.iconBtn}>
@@ -117,7 +118,7 @@ const Header = ({ menuItems = [], locale, siteName = "MareDiTrAI", logo = null }
           </div>
 
           <div className={classes.drawerNav}>
-            {menuTree.map((item) => {
+            {menuItems.map((item) => {
               const children = item.childNodes || item.children || [];
               const hasChildren = children.length > 0;
               const isOpen = !!expanded[item.databaseId];
